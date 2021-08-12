@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+#wrap {width: 1200px; height: 1000px; margin: auto;}
+
+header {height: 100px;}
+header .logo {width: 300px; height: 100px;}
+header .login-info{width: 900px; height: 100px;}
+
+.contents{height: 500px;}
+
+footer{height: 100px;}
