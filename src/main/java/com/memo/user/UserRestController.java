@@ -3,6 +3,9 @@ package com.memo.user;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,6 +62,43 @@ public class UserRestController {
 		// 결과값 리턴
 		Map<String, String> result = new HashMap<>();
 		result.put("result", "success");
+		
+		return result;
+	}
+	
+	
+	@RequestMapping("/sign_in")
+	public Map<String, String> signIn(@RequestParam("loginId") String loginId 
+			,@RequestParam("password") String password
+			,HttpServletRequest request
+			){
+		
+		
+		// password를 md5로 해싱(암호화)한다.
+		// loginId, password로 user가 가져와서 있으면 로그인 성공
+		// 성공 : session에 저장(로그인 상태를 유지, 로그아웃 하기 전까지는 모든 request-response에 로그인 상태)
+		// 실패 : session에 저장 X, 에러 리턴
+		
+		Map<String, String> result = new HashMap<>();
+		
+		String encryptedPassword = EncryptUtils.md5(password);
+		
+		User user = userBO.getUesrByLoginIdAndPassword(loginId, encryptedPassword);
+		
+		if(user != null) {
+			// 성공: 세션에 저장 (로그인 상태를 유지)
+			HttpSession session = request.getSession();
+			session.setAttribute("userLoginId", user.getLoginId());
+			session.setAttribute("userName", user.getName());
+			session.setAttribute("userPassword", user.getPassword());
+			
+			result.put("result", "success");
+			
+		} else {
+			//  실패: 에러 리턴
+			result.put("result", "fail");
+			result.put("message", "존재하지 않는 사용자입니다.");
+		};
 		
 		return result;
 	}

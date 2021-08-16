@@ -1,5 +1,10 @@
 package com.memo.user;
 
+import java.net.http.HttpRequest;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,5 +56,28 @@ public class UserController {
 		userBO.addUser(loginId, encryptedPassword, name, email);
 		
 		return "redirect:/user/sign_in_view"; // redirect는 @ResponseBody가 아닌 일반 Controller에서 작동, 다른 url로 이동
+	}
+	
+	/**
+	 * 로그인 화면
+	 * @param model
+	 * @return
+	 */
+	
+	@RequestMapping("/sign_in_view")
+	public String signInView(Model model) {
+		model.addAttribute("viewName", "user/sign_in");
+		return "template/layout";
+	}
+	
+	@RequestMapping("/sign_out")
+	public String signOut(HttpServletRequest request) {
+		//로그아웃
+		HttpSession session = request.getSession();
+		
+		session.removeAttribute("userLoginId");
+		session.removeAttribute("userName");
+		
+		return "redirect:/user/sign_in_view";
 	}
 }

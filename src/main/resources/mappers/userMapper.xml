@@ -3,6 +3,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.memo.user.DAO.UserDAO">
+	
 	<select id="selectUserByLoginId" parameterType="String" resultType="com.memo.user.User.User">
 		SELECT
 			`id`
@@ -40,5 +41,21 @@
 		);
 	
 	</insert>
+	
+	<select id="selectByLoginIdAndPassword" parameterType="Map" resultType="com.memo.user.User.User">
+		SELECT
+			`id`
+			,`loginId`
+			,`password`
+			,`name`
+			,`email`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`user`	
+		WHERE
+			`loginId` = #{loginId}
+			`password` = #{password};		
+	</select>
 	
 </mapper>

@@ -146,7 +146,7 @@
 			
 			// 2) AJAX
 			let url = '/user/sign_up_for_ajax';
-			$(this).serialize(); // form 태그에 있는 name input값(request param)이 구성된다.
+			data = $(this).serialize(); // form 태그에 있는 name input값(request param)이 구성된다.
 			                     // 만약 이걸 사용하지 않으면, data json을 임의로 구성해야 한다.
 		
 			$.post(url,data).done(function(data){
