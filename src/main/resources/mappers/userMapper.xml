@@ -54,7 +54,7 @@
 		FROM
 			`user`	
 		WHERE
-			`loginId` = #{loginId}
+			`loginId` = #{loginId} and
 			`password` = #{password};		
 	</select>
 	
