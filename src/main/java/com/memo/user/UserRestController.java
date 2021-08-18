@@ -66,9 +66,10 @@ public class UserRestController {
 		return result;
 	}
 	
-	
+	// 로그인
 	@RequestMapping("/sign_in")
-	public Map<String, String> signIn(@RequestParam("loginId") String loginId 
+	public Map<String, String> signIn(
+			@RequestParam("loginId") String loginId 
 			,@RequestParam("password") String password
 			,HttpServletRequest request
 			){
@@ -89,8 +90,8 @@ public class UserRestController {
 			// 성공: 세션에 저장 (로그인 상태를 유지)
 			HttpSession session = request.getSession();
 			session.setAttribute("userLoginId", user.getLoginId());
+			session.setAttribute("userId", user.getId());
 			session.setAttribute("userName", user.getName());
-			session.setAttribute("userPassword", user.getPassword());
 			
 			result.put("result", "success");
 			

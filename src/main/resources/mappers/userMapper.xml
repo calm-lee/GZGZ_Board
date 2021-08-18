@@ -16,7 +16,7 @@
 		FROM
 			`user`	
 		WHERE
-			`loginId` = #{"loginId"}
+			`loginId` = #{loginId}
 	</select>
 	
 	<insert id="insertUser" parameterType="map">

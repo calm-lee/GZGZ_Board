@@ -27,7 +27,6 @@ public class PermissionInterceptor implements HandlerInterceptor {
 
 		// URI - url path 확인
 		String uri = request.getRequestURI();
-		logger.info("#### preHandle:" + uri);
 
 		// 비로그인 && /post => 로그인(sign_in_view) 페이지로 redirect
 		if (userLoginId == null && uri.startsWith("/post")) {
