@@ -28,5 +28,9 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		
+		<div class="d-flex justify-content-end">
+			<a type="submit" id="postWriteBtn" href="/post/post_create_view">글쓰기</a>
+		</div>		
 	</div>
 </div>

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.memo.post.BO.PostBO;
 import com.memo.post.Post.Post;
@@ -39,4 +38,9 @@ public class PostController {
 		return "template/layout";
 	}
 	
+	@RequestMapping("/post_create_view")
+	public String postCreateView(Model model) {
+		model.addAttribute("viewName", "post/post_create");
+		return "template/layout";
+	}
 }
