@@ -74,11 +74,24 @@
 				}
 			}
 			
+			//확장자 validation(2)
+/* 			let ext = file.split('.'); // image.png -> img:[0], png:[1]
+			if(ext.length < 2 || 
+					(ext[ext.length - 1] != 'jpg' //확장자 확인
+					&& ext[ext.length - 1] != 'jpeg'
+					&& ext[ext.length - 1] != 'png'
+					&& ext[ext.length - 1] != 'gif'
+							)){
+				alert("이미지 파일만 업로드 가능합니다.");
+				$('#file').val('');
+				return;
+			} */
+			
 			// -- validation check 끝
 			
 			// 서버에 보내기
 			// form 태그를 JavaScript에서 보낸다.
-			let formData = new formData(); //form 태그를 위한 객체를 새로 만듦
+			let formData = new FormData(); //form 태그를 위한 객체를 새로 만듦
 			formData.append("subject", subject);
 			formData.append("content", content);
 			

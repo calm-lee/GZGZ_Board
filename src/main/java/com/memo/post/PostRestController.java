@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,9 +14,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.memo.post.BO.PostBO;
+
 @RestController
 @RequestMapping("/post")
 public class PostRestController {
+	
+	@Autowired
+	private PostBO postBO;
 	
 	@PostMapping("/create")
 	@ResponseBody
@@ -27,14 +33,20 @@ public class PostRestController {
 			) {
 		
 		HttpSession session = request.getSession();
-		int userId = (int) session.getAttribute("userId");
-		String userLoginId = (String) session.getAttribute("userLoginId");
+		int userId = (int) session.getAttribute("userId"); // 누가 썼는지 구별하기 위해 get
+		String userLoginId = (String) session.getAttribute("userLoginId"); // 파일 업로드를 하는 과정에서 이름이 겹치지 않는 폴더를 만들기 위해 get함
 			
 		// TODO : postBO => insert
+		int row = postBO.createPost(userId, userLoginId, subject, content, file);
 		
 		Map<String, String> result = new HashMap<>();
-		result.put("result", "success");
-
+		
+		if(row > 0) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fail");
+		}
+		
 		return result;
 	}
 	
