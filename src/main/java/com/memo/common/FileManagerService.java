@@ -45,4 +45,21 @@ public class FileManagerService {
 		
 		return "/images/" + directoryName + file.getOriginalFilename();
 	}
+	
+	
+	// 파일 삭제하는 메소드
+	public void deleteFile(String imgPath) throws IOException {
+		//FILE_UPLOAD_PATH: D:\\이의연\\Spring Project\\ex\\memo_workspace\\Memo\\images
+		
+		Path path = Paths.get(FILE_UPLOAD_PATH + imgPath.replace("/images/", ""));
+		if(Files.exists(path)){ // 존재하는지 여부를 boolean으로 알려줌
+			Files.delete(path);
+		}
+		
+		// 디렉토리 삭제
+		path = path.getParent();
+		if(Files.exists(path)) {
+			Files.delete(path);
+		}
+	}
 }

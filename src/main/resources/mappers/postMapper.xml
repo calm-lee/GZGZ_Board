@@ -43,4 +43,37 @@
  		)
  		
  	</insert>
+ 	
+ 	<select id="selectPostByPostIdAndUserId" parameterType="map" resultType="com.memo.post.Post.Post">
+	 	 SELECT
+	 			`id`
+				,`userId`
+				,`subject`
+				,`content`
+				,`imgPath`
+				,`createdAt`
+				,`updatedAt`
+	 	FROM
+	 		`post`
+	 	WHERE
+	 		`id` = #{postId}
+	 		AND `userId` = #{userId}
+ 
+ 	</select>
+ 	
+ 	<update id="updatePost" parameterType="map">
+	 	UPDATE `post`
+	 	SET
+	 		`subject` = #{subject}
+	 		, `content` = #{content}
+	 		, `updatedAt` = now()
+	 		<!-- imgPath가 null이 아닐 때만 수정 가능 -->
+	 		<if test="imgPath != null">
+	 		, `imgPath` = #{imgPath}
+	 		</if>
+	 	WHERE
+	 		`id` = #{postId} <!-- PK이기 때문에 -->
+	 		AND `userId` = #{userId}
+ 	</update>
+ 	
  </mapper>

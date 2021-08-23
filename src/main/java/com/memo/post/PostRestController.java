@@ -50,4 +50,28 @@ public class PostRestController {
 		return result;
 	}
 	
+	@PostMapping("/update")
+	public Map<String, String> postUpdate(
+			@RequestParam("postId") int postId
+			, @RequestParam("subject") String subject
+			, @RequestParam("content") String content
+			, @RequestParam(value="file", required=false) MultipartFile file
+			, HttpServletRequest request
+			){
+	
+		HttpSession session = request.getSession();
+		int userId = (int) session.getAttribute("userId"); // 누가 썼는지 구별하기 위해 get
+		String userLoginId = (String) session.getAttribute("userLoginId"); // 파일 업로드를 하는 과정에서 이름이 겹치지 않는 폴더를 만들기 위해 get함
+		
+		Map<String, String> result = new HashMap<>();
+		int row = postBO.updatePost(postId, userId, userLoginId, subject, content, file);
+		
+		if(row > 0) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fail");
+		}
+		
+		return result;
+	}
 }

@@ -28,6 +28,11 @@ public class PostBO {
 		return postDAO.selectPostListByUserId(userId);
 	}
 
+	// 내가 쓴 포스트만 가져오기 위해서 postId=userId
+	public Post getPostByPostIdAndUserId(int postId, int userId) {
+		return postDAO.selectPostByPostIdAndUserId(postId, userId);
+	}
+	
 	// 몇 행 넣을 건지 return할 거라 int
 	public int createPost(int userId, String userLoginId, String subject, String content, MultipartFile file) {
 
@@ -44,5 +49,32 @@ public class PostBO {
 		}
 		log.info("#### 이미지 주소: " + imgPath);
 		return postDAO.insertPost(userId, subject, content, imgPath);
+	}
+	
+	public int updatePost(int postId, int userId, String userLoginId, String subject, String content, MultipartFile file) {
+		
+		String imgPath = null;
+		
+		if (file != null) {
+			try {
+				// 컴퓨터(서버)에 파일 업로드 후 웹으로 접근할 수 있는 img URL을 얻어낸다.
+				imgPath = fileManagerService.saveFile(userLoginId, file);
+			} catch (IOException e) {
+				log.error("[파일업로드]" + e.getMessage());
+			}
+		}
+		
+		if(imgPath != null) {
+			Post post = postDAO.selectPostByPostIdAndUserId(postId, userId);
+			String oldImgUrl = post.getImgPath();
+			try {
+				fileManagerService.deleteFile(oldImgUrl);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				log.error("[파일삭제] 삭제 중 에러 : " + postId + " " + oldImgUrl);
+			}
+		}
+		
+		return postDAO.updatePost(postId, userId, subject, content, imgPath);
 	}
 }
