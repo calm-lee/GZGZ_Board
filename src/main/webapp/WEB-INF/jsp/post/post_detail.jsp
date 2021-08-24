@@ -52,7 +52,9 @@
 		});
 		
 		//삭제버튼 클릭
-		$('#postDeleteBtn').on('click'), function(){}
+		$('#postDeleteBtn').on('click'), function(){
+			
+		}
 		
 		
 		//글 내용 저장

@@ -29,8 +29,17 @@
 			</tbody>
 		</table>
 		
-		<div class="d-flex justify-content-end">
-			<a type="submit" id="postWriteBtn" href="/post/post_create_view">글쓰기</a>
+		<div class="d-flex justify-content-center">
+			<c:if test="${prevId ne 0}">
+				<a href="/post/post_list_view?nextId=${prevId}" class="mr-5">&lt;&lt; 이전</a>
+			</c:if>
+			<c:if test="${nextId ne 0}">
+				<a href="/post/post_list_view?nextId=${nextId}"> 다음&gt;&gt;</a>
+			</c:if>
+		</div>
+		
+		<div class="float-right">
+			<a type="submit" id="postWriteBtn" class="btn form-control bg-primary" href="/post/post_create_view">글쓰기</a>
 		</div>		
 	</div>
 </div>
